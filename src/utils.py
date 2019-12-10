@@ -17,7 +17,7 @@ from selenium import webdriver
 ArticleMeta = namedtuple('ArticleMeta', ['url', 'date', 'time', 'category', 'title', 'content'])
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('../config.ini')
 
 class NewsCrawler(object):
     
