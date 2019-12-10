@@ -39,11 +39,10 @@ class NewsCrawler(object):
         self.total_days = total_days
         self.start_date = start_date
         self.newslinks = set()
-    
+
     @retry(stop=stop_after_attempt(10),
            wait=wait_random(min=1, max=2))
     def get_bsObj(self, url):
-        
         req = self.session.get(url, headers=self.headers)
         if req.url != url:
             return None
