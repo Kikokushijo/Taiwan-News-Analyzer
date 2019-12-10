@@ -10,7 +10,7 @@ from copy import deepcopy
 from collections import namedtuple, defaultdict
 
 from bs4 import BeautifulSoup as BS
-from tenacity import retry, stop_after_attempt
+from tenacity import retry, stop_after_attempt, wait_random
 import simplejson as json
 from selenium import webdriver
 
@@ -40,7 +40,8 @@ class NewsCrawler(object):
         self.start_date = start_date
         self.newslinks = set()
     
-    @retry(stop=stop_after_attempt(3))
+    @retry(stop=stop_after_attempt(10),
+           wait=wait_random(min=1, max=2))
     def get_bsObj(self, url):
         
         req = self.session.get(url, headers=self.headers)
