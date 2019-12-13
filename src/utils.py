@@ -40,15 +40,20 @@ class NewsCrawler(object):
         self.start_date = start_date
         self.newslinks = set()
 
-    @retry(stop=stop_after_attempt(10),
-           wait=wait_random(min=1, max=2))
-    def get_bsObj(self, url):
+    @retry(stop=stop_after_attempt(3),
+           wait=wait_random(min=1, max=2),
+           retry_error_callback=lambda x: None)
+    def get_bsObj(self, url, url_check_func=lambda x, y: x != y):
+        
         req = self.session.get(url, headers=self.headers)
-        if req.url != url:
+        if url_check_func(req.url, url):
             return None
         bsObj = BS(req.text, "html.parser")
         return bsObj
     
+    @retry(stop=stop_after_attempt(3),
+           wait=wait_random(min=1, max=2),
+           retry_error_callback=lambda x: None)
     def get_bsObj_scroll_down(self, url):
 
         self.driver.get(url)
@@ -121,14 +126,18 @@ class NewsCrawler(object):
 
         return article_meta
     
-    def get_page_attribute_from_link(self, newslink):
+    def get_page_attribute_from_link(self, newslink, func=None):
+        
+        if func is None:
+            func = self.get_bsObj
+        
         if newslink in self.newslinks:
             print('Duplicated URL:', newslink)
             return None
         else:
             self.newslinks.add(newslink)
 
-        page = self.get_bsObj(newslink)
+        page = func(newslink)
         if not self.is_valid_newspage(page):
             print('Invalid or Redirected Page:', newslink)
             return None
