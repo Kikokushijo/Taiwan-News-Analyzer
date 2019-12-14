@@ -38,6 +38,7 @@ class NewsCrawler(object):
         self.output_dir = output_dir
         self.total_days = total_days
         self.start_date = start_date
+        self.end_date = start_date - datetime.timedelta(days=total_days-1)
         self.newslinks = set()
 
     @retry(stop=stop_after_attempt(3),
