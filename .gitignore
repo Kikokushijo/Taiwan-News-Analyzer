@@ -135,9 +135,11 @@ dmypy.json
 news/
 logs/
 
+# words data
+words/plus_list.txt
+words/bunshimondai.txt
+words/black_list.txt
+
 # vscode
 .vscode/
-
-# parallel workaround
-src/Ltn_parallel.py
 
