@@ -140,6 +140,7 @@ result/
 words/plus_list.txt
 words/bunshimondai.txt
 words/black_list.txt
+words/analyze_black_list.txt
 
 # vscode
 .vscode/
