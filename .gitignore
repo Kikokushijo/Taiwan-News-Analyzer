@@ -134,3 +134,10 @@ dmypy.json
 # news data
 news/
 logs/
+
+# vscode
+.vscode/
+
+# parallel workaround
+src/Ltn_parallel.py
+
