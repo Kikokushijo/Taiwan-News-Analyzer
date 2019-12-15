@@ -134,6 +134,7 @@ dmypy.json
 # news data
 news/
 logs/
+result/
 
 # words data
 words/plus_list.txt
